@@ -1,9 +1,22 @@
 song = ""; 
+leftWristX = 0;
+leftWristY = 0;
+rigthWristX = 0;
+rigthWristY = 0;
 
 function preload()
 {
     song = loadSound("music.mp3");
 
+}
+function setup()
+{
+    canvas = createCanvas(500,400);
+    canvas.position(350,200);
+    video = createCapture(VIDEO);
+    video.hide();
+    poseNet = ml5.poseNet(video,modelLoaded);
+    poseNet.on("pose",gotPoses)
 }
 function draw()
 {
@@ -16,15 +29,6 @@ function draw()
     volume = removeDecimais/500;
     document.getElementById("volume").innerHTML = "Volume = " + volume;
     song.setVolume(volume);
-}
-function setup()
-{
-    canvas = createCanvas(500,400);
-    canvas.position(350,200);
-    video = createCapture(VIDEO);
-    video.hide();
-    poseNet = ml5.poseNet(video,modelLoaded);
-    poseNet.on("pose",gotPoses)
 }
 function modelLoaded()
 {
